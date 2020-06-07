@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>课程信息列表</title>
+    <!--引入student.css-->
+    <link rel="stylesheet" type="text/css" href="../css/student.css">
+    <!--引入datacheck.js-->
+    <script type="text/javascript" src="../js/datacheck.js"></script>
+    <!--bootstrap核心文件-->
+    <link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
+    <script type="text/javascript" src="../js/jquery-1.11.0.js"></script>
+    <script type="text/javascript" src="../js/bootstrap.js"></script>
+</head>
+<script>
+    /*课程测试数据*/
+    var courses = [
+        {
+            "courseId": 1,
+            "name": "Java程序设计",
+            "type": "专业必修课",
+            "credit": 3,
+            "grade": 2015,
+            "major": "软件工程",
+            "detail": "xxx"
+        },
+        {
+            "courseId": 2,
+            "name": "Web应用程序设计",
+            "type": "专业必修课",
+            "credit": 2,
+            "grade": 2015,
+            "major": "软件工程",
+            "detail": "xxx"
+        },
+        {
+            "courseId": 3,
+            "name": "JSP程序设计",
+            "type": "专业必修课",
+            "credit": 2,
+            "grade": 2015,
+            "major": "空间信息",
+            "detail": "xxx"
+        },
+    ]
+
+    //绑定加载数据
+    window.onload = function () {
+        $("#tbody").html('');
+        var html = '';
+        for (var i = 0; i < courses.length; i++) {
+            var course = courses[i];
+            html+='<tr index="'+i+'" style="height: 20px;">\n' +
+                '        <td id="name_'+i+'">'+course.name+'</td>\n' +
+                '        <td id="type_'+i+'">'+course.type+'</td>\n' +
+                '        <td id="credit_'+i+'">'+course.credit+'</td>\n' +
+                '        <td id="grade_'+i+'">'+course.grade+'</td>\n' +
+                '        <td id="major_'+i+'">'+course.major+'</td>\n' +
+                '        <td>\n' +
+                '            <button index="'+i+'" type="button" onclick="fillModal(this);" style="background: #5bc0de" data-toggle="modal" data-target="#myModal_'+i+'">\n' +
+                '                编辑\n' +
+                '            </button>\n' +
+                '            <!--模态框-->\n' +
+                '            <div index="0" style="padding-left: 40%;padding-top: 15%" class="modal fade" id="myModal_'+i+'" tabindex="-1"\n' +
+                '                 role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">\n' +
+                '                <div class="modal-dialog">\n' +
+                '                    <div class="modal-content">\n' +
+                '                        <div class="modal-header">\n' +
+                '                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span\n' +
+                '                                    aria-hidden="true">&times;</span></button>\n' +
+                '                            <h4 class="modal-title">修改记录</h4>\n' +
+                '                        </div>\n' +
+                '                        <div class="modal-body">\n' +
+                '                            <table width="100%" style="border-collapse:separate; border-spacing:0px 5px;">\n' +
+                '<tr>\n' +
+                '                                    <td>名称：</td>\n' +
+                '                                    <td>\n' +
+                '                                        <input id="xg_name_'+i+'" name="" type="text">\n' +
+                '                                    </td>\n' +
+                '                                    <td>性质：</td>\n' +
+                '                                    <td>\n' +
+                '                                        <input id="xg_type_'+i+'" name="" type="text">\n' +
+                '                                    </td>\n' +
+                '                                </tr>\n' +
+                '                                <tr>\n' +
+                '                                    <td>学分：</td>\n' +
+                '                                    <td>\n' +
+                '                                        <input id="xg_credit_'+i+'" name="" type="text">\n' +
+                '                                    </td>\n' +
+                '                                    <td>开设年级：</td>\n' +
+                '                                    <td>\n' +
+                '                                        <input id="xg_grade_'+i+'" name="" type="text">\n' +
+                '                                    </td>\n' +
+                '                                </tr>\n' +
+                '                                <tr>\n' +
+                '                                    <td>开设专业：</td>\n' +
+                '                                    <td>\n' +
+                '                                        <input id="xg_major_'+i+'" name="" type="text">\n' +
+                '                                    </td>\n' +
+                '                                </tr>\n'+
+                '                            </table>\n' +
+                '                        </div>\n' +
+                '                        <div class="modal-footer">\n' +
+                '                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>\n' +
+                '                            <button type="button" onclick="updateById(this)" class="btn btn-primary" data-dismiss="modal">修改</button>\n' +
+                '                        </div>\n' +
+                '                    </div>\n' +
+                '                </div>\n' +
+                '            </div>\n' +
+                '            <button onclick="deleteById(this)" type="button" style="background: yellow">\n' +
+                '                删除\n' +
+                '            </button>\n' +
+                '        </td>\n' +
+                '    </tr>';
+        }
+        $("#tbody").html(html);
+        $("#count").html('共 '+courses.length+'条记录');
+        $("#tbody").children("tr:odd").css("background","#a3d1d2");//偶数变色 tbody下面的子元素
+    }
+
+    //点击 编辑按钮 填充modal
+    function fillModal(x){
+        var index = $(x).attr("index");
+        var nameVal = document.getElementById("name_"+index).innerText;
+        var typeVal = document.getElementById("type_"+index).innerText;
+        var creditVal = document.getElementById("credit_"+index).innerText;
+        var gradeVal = document.getElementById("grade_"+index).innerText;
+        var majorVal = document.getElementById("major_"+index).innerText;
+        $("#xg_name_"+index).attr("value",nameVal);
+        $("#xg_type_"+index).attr("value",typeVal);
+        $("#xg_credit_"+index).attr("value",creditVal);
+        $("#xg_grade_"+index).attr("value",gradeVal);
+        $("#xg_major_"+index).attr("value",majorVal);
+    }
+
+    //点击 编辑模态框中的修改按钮，ajax请求更新数据，成功就更新数据
+    function updateById(x) {
+        if(confirm("是否确认修改此条数据?") == true){
+            alert("修改操作......");
+        }
+        /*$.ajax({
+            url:"xxx",
+            type:"get / post",
+            data:"json",
+            dataType:"text / json",
+            async:false / true,
+            sucess:function (data) {
+                alert("xxx")
+            },
+            error:function () {
+                alert("xxx")
+            }
+        });*/
+    }
+
+    //点击 编辑模态框中的删除按钮触发
+    function deleteById(x) {
+        if(confirm("警告：是否删除改此条数据?") == true){
+            alert("删除操作......");
+        }
+    }
+
+    //点击 添加按钮触发
+    function add(x) {
+        if(confirm("请确认信息无误后，是否添加？") == true){
+            alert("添加操作......");
+        }
+    }
+
+    //点击 刷新按钮触发
+    function refresh(x) {
+        alert("刷新操作......")
+    }
+
+</script>
+<body>
+<hr>
+<table align="center" style="width: 85%;padding-left: 15%">
+    <!--header-->
+    <tr>
+        <td colspan="6" align="center" style="background: #0078B7;">
+            <span style="font-size: large;">课程信息列表</span>
+        </td>
+    </tr>
+    <!--/header-->
+
+    <!--h-->
+    <tr style="height: 20px;background: gainsboro">
+        <td>名称</td>
+        <td>性质</td>
+        <td>学分</td>
+        <td>开设年级</td>
+        <td>开设专业</td>
+        <td>操作</td>
+    </tr>
+    <!--h/-->
+
+    <!--content-->
+    <tbody id="tbody">
+
+    </tbody>
+    <!--/content-->
+
+    <!--工具-->
+    <tr>
+        <td colspan="4">
+            <button type="button" class="btn-sm" style="background: #5bc0de" data-toggle="modal" data-target="#myModal">
+                添加
+            </button>
+            <!--模态框-->
+            <div style="padding-left: 40%;padding-top: 15%;" class="modal fade" id="myModal" tabindex="-1" role="dialog"
+                 aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">添加记录</h4>
+                        </div>
+                        <div class="modal-body" style="padding-left:10%;padding-right: 10%">
+                            <table width="100%" style="border-collapse:separate; border-spacing:0px 5px;">
+                                <tr>
+                                    <td>名称：</td>
+                                    <td>
+                                        <input name="" type="text">
+                                    </td>
+                                    <td>性质：</td>
+                                    <td>
+                                        <input name="" type="text">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>学分：</td>
+                                    <td>
+                                        <input name="" type="text">
+                                    </td>
+                                    <td>开设年级：</td>
+                                    <td>
+                                        <input name="" type="text">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>开设专业：</td>
+                                    <td>
+                                        <input name="" type="text">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                            <button type="button" class="btn btn-primary" onclick="add(this)" data-dismiss="modal">添加</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </td>
+        <td colspan="2">
+            <button onclick="refresh(this)" class="btn-sm" type="button" style="background: #5bc0de">
+                刷新数据列表
+            </button>
+        </td>
+    </tr>
+    <!--/工具-->
+    <tr>
+        <td>
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    <li>
+                        <a href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li><a href="#">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">4</a></li>
+                    <li><a href="#">5</a></li>
+                    <li>
+                        <a href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <span style="font-size: small" id="count">共0条记录</span>
+        </td>
+    </tr>
+
+</table>
+</body>
+<script>
+
+</script>
+</html>
