@@ -7,7 +7,7 @@
     <!--字符过滤器-->
     <filter>
         <filter-name>/GenericEncodingFilter</filter-name>
-        <filter-class>com.lover.web.web.filter.GenericEncodingFilter</filter-class>
+        <filter-class>com.itlover.tms.web.filter.GenericEncodingFilter</filter-class>
         <init-param>
             <param-name>CharacterEncoding</param-name>
             <param-value>UTF-8</param-value>

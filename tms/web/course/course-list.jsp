@@ -1,6 +1,6 @@
 <%@ page import="java.util.List" %>
-<%@ page import="com.lover.web.pojo.Course" %>
-<%@ page import="com.lover.web.utils.PageInfo" %>
+<%@ page import="com.itlover.tms.pojo.Course" %>
+<%@ page import="com.itlover.tms.utils.PageInfo" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <% String contextPath = request.getContextPath();%>
 <html>
