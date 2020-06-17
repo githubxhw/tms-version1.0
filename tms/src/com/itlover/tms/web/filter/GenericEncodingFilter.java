@@ -22,8 +22,8 @@ public class GenericEncodingFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        //System.out.println("doFilter");
         HttpServletRequest request = (HttpServletRequest)servletRequest;
+        //System.out.println(request.getRequestURI());
         MyRequest myRequest = new MyRequest(request,encoding);//对request进行了增强
         filterChain.doFilter(myRequest,servletResponse);
     }

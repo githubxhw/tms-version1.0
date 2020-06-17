@@ -36,7 +36,7 @@ import java.util.List;
  *         multipart/form-data ： 需要在表单中进行文件上传时，就需要使用该格式
  *      经常会用到的若干content-type的内容格式
  */
-@WebServlet("/CourseServlet")
+@WebServlet("/api/courseServlet")
 public class CourseServlet extends BaseServlet {
 
     //查询所有的course信息
@@ -71,7 +71,7 @@ public class CourseServlet extends BaseServlet {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "/course/course-list.jsp";
+        return "/jsp/course/course-list.jsp";
     }
 
     //根据courseId查询信息服务接口

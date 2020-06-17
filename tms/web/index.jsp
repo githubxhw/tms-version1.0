@@ -13,9 +13,7 @@
   <%String contextPath = request.getContextPath();%>
   <body>
   <h1>欢迎来到管理系统</h1>
-  <a href="<%=contextPath%>/CourseServlet?method=findAllByPage">课程列表</a><hr>
-  <a href="<%=contextPath%>/CourseServlet?method=findAllByPage">课程列表</a><hr>
-  <a href="<%=contextPath%>/CourseServlet?method=findAllByPage">课程列表</a><hr>
-  <a href="<%=contextPath%>/CourseServlet?method=findAllByPage">课程列表</a><hr>
+  <a href="<%=contextPath%>/api/courseServlet?method=findAllByPage">课程列表</a><hr>
+  <a href="<%=contextPath%>/api/loginServlet?method=loginOut">退出登录</a>
   </body>
 </html>
