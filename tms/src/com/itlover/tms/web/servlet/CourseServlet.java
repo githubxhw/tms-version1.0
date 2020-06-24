@@ -165,4 +165,21 @@ public class CourseServlet extends BaseServlet {
             e.printStackTrace();
         }
     }
+
+    //查询所有信息接口
+    public void findAll(HttpServletRequest request, HttpServletResponse response){
+        try {
+            ICourseMapper courseMapper = new CourseMapperImpl();
+            List<Course> courses = courseMapper.findAll();
+            String listToJson = JSONUtil.listToJson(courses);
+            //System.out.println(listToJson);
+            response.setContentType("application/json;charset=utf-8");
+            PrintWriter writer = response.getWriter();
+            writer.print(listToJson);
+            writer.flush();
+            writer.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

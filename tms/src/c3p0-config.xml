@@ -7,9 +7,9 @@
 	-->
   <default-config>
     <property name="driverClass">com.mysql.cj.jdbc.Driver</property>
-    <property name="jdbcUrl">jdbc:mysql://123.56.62.110:3306/db_tms?serverTimezone=UTC</property>
-    <property name="user">remoteUser1</property>
-    <property name="password">remoteUser1</property>
+    <property name="jdbcUrl">jdbc:mysql://localhost:3306/db_tms?serverTimezone=UTC</property>
+    <property name="user">root</property>
+    <property name="password">xhw123</property>
 
     <property name="initialPoolSize">10</property>
     <property name="maxIdleTime">30</property>

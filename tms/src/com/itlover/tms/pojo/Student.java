@@ -6,11 +6,11 @@ import java.io.Serializable;
 public class Student implements Serializable {
 
     private int studentId;//学生ID
-    private String studentCode;//学号
+    private String studentCode;//学号 学号不能重复，5位字符
     private String studentName;//姓名
     private int sex;//性别:0/1 男/女
     private String sexStr;
-    private int grade;//年级
+    private int grade;//年级 入学年份，4位整数
     private int major;//专业: 1软件工程 2空间信息 3大数据
     private String majorStr;
     private String detail;//备注
@@ -28,6 +28,22 @@ public class Student implements Serializable {
                 ", majorStr='" + majorStr + '\'' +
                 ", detail='" + detail + '\'' +
                 '}';
+    }
+
+    public String getSexStr() {
+        return sexStr;
+    }
+
+    public void setSexStr(String sexStr) {
+        this.sexStr = sexStr;
+    }
+
+    public String getMajorStr() {
+        return majorStr;
+    }
+
+    public void setMajorStr(String majorStr) {
+        this.majorStr = majorStr;
     }
 
     public int getStudentId() {

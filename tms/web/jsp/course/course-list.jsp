@@ -151,7 +151,7 @@
     <!--工具-->
     <!--工具-->
     <tr>
-        <td colspan="4">
+        <td colspan="5">
             <button type="button" class="btn-sm" style="background: #5bc0de" data-toggle="modal" data-target="#myModal">
                 添加
             </button>
@@ -226,7 +226,7 @@
                 </div>
             </div>
         </td>
-        <td colspan="2">
+        <td colspan="1">
             <button onclick="refresh(this)" class="btn-sm" type="button" style="background: #5bc0de">
                 刷新数据列表
             </button>
@@ -281,6 +281,31 @@
 </table>
 <script>
 
+    //检查表单数据
+    function checkForm(form) {
+        /*验证名称*/
+        if(form.courseName.value.length < 5 || form.courseName.value.length > 20 || form.courseName.value.length == null){
+            alert("课程名称不为空且长度是5~20！");
+            return false;
+        }
+        /*验证性质*/
+        if(form.type.value == ""){
+            alert("性质不为空！");
+            return false;
+        }
+        /*验证学分*/
+        if(form.credit.value == "" || !IsInt(form.credit.value)){
+            alert("学分不能为空且为数值！");
+            return;
+        }
+        /*验证开设年级*/
+        if(form.grade.value.length == "" || form.grade.value.length != 4 || !IsInt(form.grade.value)){
+            alert("开设年级不为空且是4位整数！");
+            return false;
+        }
+        return true;
+    }
+
     //点击 编辑按钮 填充modal
     function fillModal(x) {
         var $x = $(x);
@@ -322,25 +347,28 @@
     function updateById(x) {
         if (confirm("是否确认修改此条数据?") == true) {
             var index = $(x).attr("index");
-            var params = $("#xg_form_" + index).serialize();
-            $.ajax({
-                url: "<%=contextPath%>/api/courseServlet?method=updateByCourseId",
-                type: "post",
-                data: params,
-                dataType: "text",
-                async: true,
-                success: function (data) {
-                    if (data == 1) {
-                        alert("修改成功！");
-                        window.location.href = "<%=contextPath%>/api/courseServlet?method=findAllByPage&pageNum=<%=pageInfo.getPageNum()%>&pageSize=<%=pageInfo.getPageSize()%>";
-                    } else {
-                        alert("修改失败！");
+            var form = document.getElementById("xg_form_"+index);
+            if(checkForm(form)){
+                var params = $("#xg_form_" + index).serialize();
+                $.ajax({
+                    url: "<%=contextPath%>/api/courseServlet?method=updateByCourseId",
+                    type: "post",
+                    data: params,
+                    dataType: "text",
+                    async: true,
+                    success: function (data) {
+                        if (data == 1) {
+                            alert("修改成功！");
+                            window.location.href = "<%=contextPath%>/api/courseServlet?method=findAllByPage&pageNum=<%=pageInfo.getPageNum()%>&pageSize=<%=pageInfo.getPageSize()%>";
+                        } else {
+                            alert("修改失败！");
+                        }
+                    },
+                    error: function () {
+                        alert("修改异常！")
                     }
-                },
-                error: function () {
-                    alert("修改异常！")
-                }
-            });
+                });
+            }
         }
     }
 
@@ -372,25 +400,28 @@
     //点击 添加按钮触发
     function add(x) {
         if (confirm("请确认信息无误后，是否添加？") == true) {
-            var params = $("#add_form").serialize();
-            $.ajax({
-                url: "<%=contextPath%>/api/courseServlet?method=saveOne",
-                type: "post",
-                data: params,
-                dataType: "text",
-                async: true,
-                success: function (data) {
-                    if (data == 1) {
-                        alert("添加成功！");
-                        window.location.href = "<%=contextPath%>/api/courseServlet?method=findAllByPage&pageNum=<%=pageInfo.getPageNum()%>&pageSize=<%=pageInfo.getPageSize()%>";
-                    } else {
-                        alert("添加失败！");
+            var form = document.getElementById("add_form");
+            if(checkForm(form)){
+                var params = $("#add_form").serialize();
+                $.ajax({
+                    url: "<%=contextPath%>/api/courseServlet?method=saveOne",
+                    type: "post",
+                    data: params,
+                    dataType: "text",
+                    async: true,
+                    success: function (data) {
+                        if (data == 1) {
+                            alert("添加成功！");
+                            window.location.href = "<%=contextPath%>/api/courseServlet?method=findAllByPage&pageNum=<%=pageInfo.getPageNum()%>&pageSize=<%=pageInfo.getPageSize()%>";
+                        } else {
+                            alert("添加失败！");
+                        }
+                    },
+                    error: function () {
+                        alert("添加异常！")
                     }
-                },
-                error: function () {
-                    alert("添加异常！")
-                }
-            });
+                });
+            }
         }
     }
 
