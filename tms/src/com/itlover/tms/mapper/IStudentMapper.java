@@ -31,7 +31,7 @@ public interface IStudentMapper {
     int deleteById(int parseInt) throws Exception;
 
     //根据学生的学号查询信息
-    int findStudentIdByStudentCode(String studentCode) throws Exception;
+    Object findStudentIdByStudentCode(String studentCode) throws Exception;
 
     //根据学生的ID查询所有的Sc即student和course的选课
     List<Sc> findScByStudentId(int studentId) throws Exception;

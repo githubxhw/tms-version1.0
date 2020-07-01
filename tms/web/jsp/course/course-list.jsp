@@ -19,6 +19,13 @@
 <body>
 <hr>
 <table align="center" style="width: 85%;padding-left: 15%">
+    <tr>
+        <td colspan="6">
+            <button type="button" class="btn btn-sm" style="left: 15%;">
+                <a href="<%=contextPath%>/index.jsp">首页</a>
+            </button>
+        </td>
+    </tr>
     <!--header-->
     <tr>
         <td colspan="6" align="center" style="background: #0078B7;">

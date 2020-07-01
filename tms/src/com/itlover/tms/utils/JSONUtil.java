@@ -96,7 +96,7 @@ public class JSONUtil {
     public static void main(String[] args) {
         Teacher teacher = new Teacher();
         teacher.setBirthday(new Date());
-        String courseJson = JSONUtil.objectToJson(teacher);
-        System.out.println(courseJson);
+        String t = JSONUtil.objectToJson(teacher);
+        System.out.println(t);
     }
 }

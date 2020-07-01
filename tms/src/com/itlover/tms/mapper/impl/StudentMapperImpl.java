@@ -62,10 +62,10 @@ public class StudentMapperImpl implements IStudentMapper {
     }
 
     @Override
-    public int findStudentIdByStudentCode(String studentCode) throws Exception {
+    public Object findStudentIdByStudentCode(String studentCode) throws Exception {
         QueryRunner queryRunner = new QueryRunner(JDBCUtil.getDataSource());
         String sql = "select `studentId` from t_student where studentCode=?";
-        return (int)queryRunner.query(sql, new ScalarHandler(),studentCode);
+        return queryRunner.query(sql, new ScalarHandler(),studentCode);
     }
 
     @Override

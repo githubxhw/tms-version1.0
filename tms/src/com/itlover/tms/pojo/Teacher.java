@@ -35,6 +35,14 @@ public class Teacher implements Serializable {
                 '}';
     }
 
+    public String getSexStr() {
+        return sexStr;
+    }
+
+    public void setSexStr(String sexStr) {
+        this.sexStr = sexStr;
+    }
+
     public int getTeacherId() {
         return teacherId;
     }
@@ -115,4 +123,5 @@ public class Teacher implements Serializable {
     public void setDetail(String detail) {
         this.detail = detail;
     }
+
 }
