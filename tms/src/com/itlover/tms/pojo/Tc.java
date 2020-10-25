@@ -7,12 +7,16 @@ public class Tc implements Serializable {
 
     private int teacherId;//教师ID
     private int courseId;//课程ID
+    private String teacherName;
+    private String courseName;
 
     @Override
     public String toString() {
         return "Tc{" +
                 "teacherId=" + teacherId +
+                ", teacherName=" + teacherName +
                 ", courseId=" + courseId +
+                ", courseName=" + courseName +
                 '}';
     }
 
@@ -30,5 +34,21 @@ public class Tc implements Serializable {
 
     public void setCourseId(int courseId) {
         this.courseId = courseId;
+    }
+
+    public String getTeacherName() {
+        return teacherName;
+    }
+
+    public void setTeacherName(String teacherName) {
+        this.teacherName = teacherName;
+    }
+
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
     }
 }

@@ -15,14 +15,18 @@ public class TcMapperImpl implements ITcMapper {
     @Override
     public List<Tc> findAll() throws Exception{
         QueryRunner queryRunner = new QueryRunner(JDBCUtil.getDataSource());
-        String sql = "select * from t_tc order by teacherId";
+        String sql = "select t_tc.teacherId, t_teacher.teacherName, t_tc.courseId, t_course.courseName from " +
+                "t_tc,t_teacher,t_course where t_tc.teacherId=t_teacher.teacherId and t_tc.courseId=t_course.courseId " +
+                "order by t_tc.teacherId";
         return queryRunner.query(sql, new BeanListHandler<Tc>(Tc.class));
     }
 
     @Override
     public List<Tc> findAllByPage(int pageNum, int pageSize) throws Exception {
         QueryRunner queryRunner = new QueryRunner(JDBCUtil.getDataSource());
-        String sql = "select * from t_tc order by teacherId limit ?,?";
+        String sql = "select t_tc.teacherId, t_teacher.teacherName, t_tc.courseId, t_course.courseName from " +
+                "t_tc,t_teacher,t_course where t_tc.teacherId=t_teacher.teacherId and t_tc.courseId=t_course.courseId " +
+                "order by t_tc.teacherId limit ?,?";
         return queryRunner.query(sql, new BeanListHandler<Tc>(Tc.class),(pageNum-1)*pageSize,pageSize);
     }
 
@@ -36,7 +40,7 @@ public class TcMapperImpl implements ITcMapper {
     @Override
     public Tc findById(int teacherId,int courseId) throws Exception {
         QueryRunner queryRunner = new QueryRunner(JDBCUtil.getDataSource());
-        String sql = "select * from t_tc where teacherId=? and courseId=?";
+        String sql = "select t_tc.teacherId, t_teacher.teacherName, t_tc.courseId, t_course.courseName from t_tc,t_teacher,t_course where teacherId=? and courseId=?";
         return queryRunner.query(sql, new BeanHandler<Tc>(Tc.class),teacherId,courseId);
     }
     @Override

@@ -53,7 +53,7 @@
         for (int i = 0; i < courses.size(); i++) {
             Course course = courses.get(i);
     %>
-        <tr>
+    <tr>
         <td hidden="hidden" index="<%=i%>" id="courseId_<%=i%>"></td>
         <td id="courseName_<%=i%>"><%=course.getCourseName()%>
         </td>
@@ -244,45 +244,58 @@
         <td>
             <nav aria-label="Page navigation">
                 <ul class="pagination">
-                    <li><a href="<%=contextPath%>/api/courseServlet?method=findAllByPage&pageNum=1&pageSize=<%=pageInfo.getPageSize()%>">首页</a></li>
                     <li>
-                        <a href="<%=contextPath%>/api/courseServlet?method=findAllByPage&pageNum=<%=pageInfo.getPageNum()-1 >= 1 ? pageInfo.getPageNum()-1 : pageInfo.getPageNum()%>&pageSize=<%=pageInfo.getPageSize()%>" aria-label="Previous">
+                        <a href="<%=contextPath%>/api/courseServlet?method=findAllByPage&pageNum=1&pageSize=<%=pageInfo.getPageSize()%>">首页</a>
+                    </li>
+                    <li>
+                        <a href="<%=contextPath%>/api/courseServlet?method=findAllByPage&pageNum=<%=pageInfo.getPageNum()-1 >= 1 ? pageInfo.getPageNum()-1 : pageInfo.getPageNum()%>&pageSize=<%=pageInfo.getPageSize()%>"
+                           aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
                     <%
                         //总页数少于5个
-                        if(pageInfo.getPages() <= 5){
-                            for (int i = 1; i <= pageInfo.getPages();i++){
-                            %>
-                                <li><a href="<%=contextPath%>/api/courseServlet?method=findAllByPage&pageNum=<%=i%>&pageSize=<%=pageInfo.getPageSize()%>"><%=i%></a></li>
-                            <%
+                        if (pageInfo.getPages() <= 5) {
+                            for (int i = 1; i <= pageInfo.getPages(); i++) {
+                    %>
+                    <li>
+                        <a href="<%=contextPath%>/api/courseServlet?method=findAllByPage&pageNum=<%=i%>&pageSize=<%=pageInfo.getPageSize()%>"><%=i%>
+                        </a></li>
+                    <%
+                        }
+                    } else {//多于5个
+                        if (pageInfo.getPageNum() + 4 <= pageInfo.getPages()) {
+                            for (int i = pageInfo.getPageNum(); i <= pageInfo.getPageNum() + 4; i++) {
+                    %>
+                    <li>
+                        <a href="<%=contextPath%>/api/courseServlet?method=findAllByPage&pageNum=<%=i%>&pageSize=<%=pageInfo.getPageSize()%>"><%=i%>
+                        </a></li>
+                    <%
+                        }
+                    } else if (pageInfo.getPageNum() + 4 > pageInfo.getPages()) {
+                        for (int i = pageInfo.getPages() - 4; i <= pageInfo.getPages(); i++) {
+                    %>
+                    <li>
+                        <a href="<%=contextPath%>/api/courseServlet?method=findAllByPage&pageNum=<%=i%>&pageSize=<%=pageInfo.getPageSize()%>"><%=i%>
+                        </a></li>
+                    <%
+                                }
                             }
-                        }else {//多于5个
-                            if(pageInfo.getPageNum()+4 <= pageInfo.getPages()){
-                                for (int i = pageInfo.getPageNum(); i <= pageInfo.getPageNum()+4;i++){
-                                %>
-                                    <li><a href="<%=contextPath%>/api/courseServlet?method=findAllByPage&pageNum=<%=i%>&pageSize=<%=pageInfo.getPageSize()%>"><%=i%></a></li>
-                                <%
-                                }
-                            }else if(pageInfo.getPageNum()+4 > pageInfo.getPages()){
-                                    for (int i = pageInfo.getPages()-4; i <= pageInfo.getPages();i++){
-                                    %>
-                                        <li><a href="<%=contextPath%>/api/courseServlet?method=findAllByPage&pageNum=<%=i%>&pageSize=<%=pageInfo.getPageSize()%>"><%=i%></a></li>
-                                    <%
-                                }
-                             }
                         }
                     %>
                     <li>
-                        <a href="<%=contextPath%>/api/courseServlet?method=findAllByPage&pageNum=<%=pageInfo.getPageNum()+1 <= pageInfo.getPages() ? pageInfo.getPageNum()+1 : pageInfo.getPageNum()%>&pageSize=<%=pageInfo.getPageSize()%>" aria-label="Next">
+                        <a href="<%=contextPath%>/api/courseServlet?method=findAllByPage&pageNum=<%=pageInfo.getPageNum()+1 <= pageInfo.getPages() ? pageInfo.getPageNum()+1 : pageInfo.getPageNum()%>&pageSize=<%=pageInfo.getPageSize()%>"
+                           aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>
-                    <li><a href="<%=contextPath%>/api/courseServlet?method=findAllByPage&pageNum=<%=pageInfo.getPages()%>&pageSize=<%=pageInfo.getPageSize()%>">尾页</a></li>
+                    <li>
+                        <a href="<%=contextPath%>/api/courseServlet?method=findAllByPage&pageNum=<%=pageInfo.getPages()%>&pageSize=<%=pageInfo.getPageSize()%>">尾页</a>
+                    </li>
                 </ul>
             </nav>
-            <span style="font-size: small" id="count">当前页:总页<%=pageInfo.getPageNum()%>/<%=pageInfo.getPages()%>，共<%=pageInfo.getTotalCount()%>条记录</span>
+            <span style="font-size: small"
+                  id="count">当前页:总页<%=pageInfo.getPageNum()%>/<%=pageInfo.getPages()%>，共<%=pageInfo.getTotalCount()%>条记录</span>
         </td>
     </tr>
 </table>
@@ -291,22 +304,22 @@
     //检查表单数据
     function checkForm(form) {
         /*验证名称*/
-        if(form.courseName.value.length < 5 || form.courseName.value.length > 20 || form.courseName.value.length == null){
+        if (form.courseName.value.length < 5 || form.courseName.value.length > 20 || form.courseName.value.length == null) {
             alert("课程名称不为空且长度是5~20！");
             return false;
         }
         /*验证性质*/
-        if(form.type.value == ""){
+        if (form.type.value == "") {
             alert("性质不为空！");
             return false;
         }
         /*验证学分*/
-        if(form.credit.value == "" || !IsInt(form.credit.value)){
+        if (form.credit.value == "" || !IsInt(form.credit.value)) {
             alert("学分不能为空且为数值！");
             return;
         }
         /*验证开设年级*/
-        if(form.grade.value.length == "" || form.grade.value.length != 4 || !IsInt(form.grade.value)){
+        if (form.grade.value.length == "" || form.grade.value.length != 4 || !IsInt(form.grade.value)) {
             alert("开设年级不为空且是4位整数！");
             return false;
         }
@@ -354,8 +367,8 @@
     function updateById(x) {
         if (confirm("是否确认修改此条数据?") == true) {
             var index = $(x).attr("index");
-            var form = document.getElementById("xg_form_"+index);
-            if(checkForm(form)){
+            var form = document.getElementById("xg_form_" + index);
+            if (checkForm(form)) {
                 var params = $("#xg_form_" + index).serialize();
                 $.ajax({
                     url: "<%=contextPath%>/api/courseServlet?method=updateByCourseId",
@@ -408,7 +421,7 @@
     function add(x) {
         if (confirm("请确认信息无误后，是否添加？") == true) {
             var form = document.getElementById("add_form");
-            if(checkForm(form)){
+            if (checkForm(form)) {
                 var params = $("#add_form").serialize();
                 $.ajax({
                     url: "<%=contextPath%>/api/courseServlet?method=saveOne",

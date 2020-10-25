@@ -68,27 +68,27 @@ public class StudentMapperImpl implements IStudentMapper {
         return queryRunner.query(sql, new ScalarHandler(),studentCode);
     }
 
-    @Override
+    /*@Override
     public List<Sc> findScByStudentId(int studentId) throws Exception {
         QueryRunner queryRunner = new QueryRunner(JDBCUtil.getDataSource());
         String sql = "select * from t_sc where studentId=?";
         return queryRunner.query(sql, new BeanListHandler<Sc>(Sc.class),studentId);
-    }
+    }*/
 
-    @Override
+    /*@Override
     public Sc findScByStudentIdAndCourseId(Sc sc) throws Exception {
         QueryRunner queryRunner = new QueryRunner(JDBCUtil.getDataSource());
         String sql = "select * from t_sc where studentId=? and courseId=?";
         return queryRunner.query(sql, new BeanHandler<>(Sc.class),sc.getStudentId(),sc.getCourseId());
-    }
+    }*/
 
-    @Override
+    /*@Override
     public void saveSc(Sc sc) throws Exception {
         QueryRunner queryRunner = new QueryRunner(JDBCUtil.getDataSource());
         String sql = "insert into t_sc (`studentId`,`courseId`) value (?,?)";
         queryRunner.update(sql,sc.getStudentId(),sc.getCourseId());
         return;
-    }
+    }*/
 
     @Override
     public Student findStudentByStudentCode(String studentCode) throws Exception {
@@ -97,10 +97,10 @@ public class StudentMapperImpl implements IStudentMapper {
         return queryRunner.query(sql,new BeanHandler<Student>(Student.class),studentCode);
     }
 
-    @Override
+    /*@Override
     public int deleteScByStudentIdAndCourseId(int studentId, int courseId) throws Exception {
         QueryRunner queryRunner = new QueryRunner(JDBCUtil.getDataSource());
         String sql = "delete from t_sc where studentId=? and courseId=?";
         return queryRunner.update(sql,studentId,courseId);
-    }
+    }*/
 }

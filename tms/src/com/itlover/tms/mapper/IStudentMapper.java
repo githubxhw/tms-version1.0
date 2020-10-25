@@ -34,17 +34,17 @@ public interface IStudentMapper {
     Object findStudentIdByStudentCode(String studentCode) throws Exception;
 
     //根据学生的ID查询所有的Sc即student和course的选课
-    List<Sc> findScByStudentId(int studentId) throws Exception;
+    //List<Sc> findScByStudentId(int studentId) throws Exception;
 
     //根据主键查询信息
-    Sc findScByStudentIdAndCourseId(Sc sc) throws Exception;
+    //Sc findScByStudentIdAndCourseId(Sc sc) throws Exception;
 
     //保存Sc
-    void saveSc(Sc sc) throws Exception;
+    //void saveSc(Sc sc) throws Exception;
 
     //根据studentCode查询信息
     Student findStudentByStudentCode(String studentCode) throws Exception;
 
     //删除选课
-    int deleteScByStudentIdAndCourseId(int studentId, int courseId) throws Exception;
+    //int deleteScByStudentIdAndCourseId(int studentId, int courseId) throws Exception;
 }

@@ -15,14 +15,18 @@ public class ScoreMapperImpl implements IScoreMapper {
     @Override
     public List<Score> findAll() throws Exception{
         QueryRunner queryRunner = new QueryRunner(JDBCUtil.getDataSource());
-        String sql = "select * from t_score";
+        String sql = "select t_score.*,t_student.studentName,t_course.courseName from t_score" +
+                " left join t_student on t_score.studentId = t_student.studentId" +
+                " left join t_course on t_score.courseId=t_course.courseId";
         return queryRunner.query(sql, new BeanListHandler<Score>(Score.class));
     }
 
     @Override
     public List<Score> findAllByPage(int pageNum, int pageSize) throws Exception {
         QueryRunner queryRunner = new QueryRunner(JDBCUtil.getDataSource());
-        String sql = "select * from t_score limit ?,?";
+        String sql = "select t_score.*,t_student.studentName,t_course.courseName from t_score" +
+                " left join t_student on t_score.studentId = t_student.studentId" +
+                " left join t_course on t_score.courseId=t_course.courseId limit ?,?";
         return queryRunner.query(sql, new BeanListHandler<Score>(Score.class),(pageNum-1)*pageSize,pageSize);
     }
 
@@ -36,7 +40,11 @@ public class ScoreMapperImpl implements IScoreMapper {
     @Override
     public Score findById(int studentId,int courseId) throws Exception {
         QueryRunner queryRunner = new QueryRunner(JDBCUtil.getDataSource());
-        String sql = "select * from t_score where studentId=? and courseId=?";
+        String sql = "select t_score.*,t_student.studentName,t_course.courseName from t_score" +
+                " left join t_student on t_score.studentId = t_student.studentId" +
+                " left join t_course on t_score.courseId=t_course.courseId" +
+                " where t_score.studentId=? and t_score.courseId=?";
+
         return queryRunner.query(sql, new BeanHandler<Score>(Score.class),studentId,courseId);
     }
 
